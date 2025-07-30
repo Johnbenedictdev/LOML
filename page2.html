@@ -223,7 +223,6 @@
 <footer>Made with love for Hayaty ✨💕</footer>
 
 <script>
-  // Floating Flowers
   const joyce = document.getElementById('joyce');
   const flowers = [];
   for (let i = 0; i < 40; i++) {
@@ -249,7 +248,6 @@
     flower.style.animation = `orbit-${i} 6s linear infinite`;
   });
 
-  // Joyce scale
   const isMobile = window.innerWidth <= 768;
   const initialScale = isMobile ? 0.7 : 1.8;
   const minScale = 0.4;
@@ -258,16 +256,19 @@
     const scrollY = window.scrollY;
     const scale = Math.max(initialScale - scrollY / 600, minScale);
     joyce.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  });
 
-    // On scroll, unmute and play music video
-    const musicVideo = document.getElementById("musicVideo");
-    if (musicVideo.muted) {
+  const musicVideo = document.getElementById("musicVideo");
+  let hasScrolled = false;
+
+  window.addEventListener('wheel', () => {
+    if (!hasScrolled) {
+      hasScrolled = true;
       musicVideo.muted = false;
       musicVideo.play().catch(() => {});
     }
-  });
+  }, { once: true });
 
-  // Media Carousel
   const mediaItems = document.querySelectorAll("#mediaContainer img, #mediaContainer video");
   let current = 0;
 
