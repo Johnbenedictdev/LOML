@@ -37,19 +37,23 @@
 
     .card {
       background-color: var(--white);
-      margin: 0 auto 20px auto;
+      margin: 20px auto;
       border-radius: 16px;
       max-width: 500px;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
       overflow: visible;
+      padding-bottom: 20px;
       text-align: center;
       position: relative;
     }
 
     .music-video {
       width: 100%;
+      height: auto;
       display: block;
       margin: 0 auto;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
     }
 
     .media-container {
@@ -165,12 +169,11 @@
   <img src="images/kimo.png" alt="Kareem Floating" />
 </div>
 
-<!-- TOP MUSIC VIDEO -->
-<video class="music-video" id="musicVideo" src="images/page2music.mp4" autoplay loop playsinline muted></video>
-
 <div class="card">
+  <!-- Music Video on top of slideshow -->
+  <video id="musicVideo" class="music-video" src="images/page2music.mp4" autoplay loop muted playsinline></video>
+
   <div class="media-container" id="mediaContainer">
-    <!-- IMAGE/VIDEO SLIDESHOW -->
     <img src="images/april11.5.jpeg" class="active" alt="Memory 1">
     <img src="images/feb6.5.jpeg" alt="Memory 2">
     <img src="images/feb6.6.jpeg" alt="Memory 3">
@@ -185,14 +188,36 @@
 
   <div class="card-text">
     <p>
-      I will never understand why you didn’t have much friends because I don’t know anyone from our friend group that has a negative opinion on you...
+      I will never understand why you didn’t have much friends because I don’t know anyone from our friend group that has a negative opinion on you.
+      You are extremely loved and that is because you are very loving and you have a great heart. You have amassed a great number of friends and supporters.
+      You have not only created a friend group, you have created a family that will always fight for you and will always put your best interest in heart.
+      We all love you very much and when you were gone for a bit, we were all distraught by your absence.
+      It is no secret that my family loves you so much, you are now a part of my family, and you are always welcome in our home.
+      The time we spent in IKEA and in my home shows the love my family has for you. We are your family till the end of time.
     </p>
   </div>
 </div>
 
 <div class="letters-grid">
   <a href="page1.html"><img src="images/readletter.png" alt="Letter 1"></a>
-  <!-- Continue letter links... -->
+  <a href="page2.html"><img src="images/readletter.png" alt="Letter 2"></a>
+  <a href="page3.html"><img src="images/letter.png" alt="Letter 3"></a>
+  <a href="page4.html"><img src="images/letter.png" alt="Letter 4"></a>
+  <a href="page5.html"><img src="images/letter.png" alt="Letter 5"></a>
+  <a href="page6.html"><img src="images/letter.png" alt="Letter 6"></a>
+  <a href="page7.html"><img src="images/letter.png" alt="Letter 7"></a>
+  <a href="page8.html"><img src="images/letter.png" alt="Letter 8"></a>
+  <a href="page9.html"><img src="images/letter.png" alt="Letter 9"></a>
+  <a href="page10.html"><img src="images/letter.png" alt="Letter 10"></a>
+  <a href="page11.html"><img src="images/letter.png" alt="Letter 11"></a>
+  <a href="page12.html"><img src="images/letter.png" alt="Letter 12"></a>
+  <a href="page13.html"><img src="images/letter.png" alt="Letter 13"></a>
+  <a href="page14.html"><img src="images/letter.png" alt="Letter 14"></a>
+  <a href="page15.html"><img src="images/letter.png" alt="Letter 15"></a>
+  <a href="page16.html"><img src="images/letter.png" alt="Letter 16"></a>
+  <a href="page17.html"><img src="images/letter.png" alt="Letter 17"></a>
+  <a href="page18.html"><img src="images/letter.png" alt="Letter 18"></a>
+  <a href="page19.html"><img src="images/letter.png" alt="Letter 19"></a>
 </div>
 
 <footer>Made with love for Hayaty ✨💕</footer>
@@ -224,7 +249,7 @@
     flower.style.animation = `orbit-${i} 6s linear infinite`;
   });
 
-  // Scale Joyce
+  // Joyce scale
   const isMobile = window.innerWidth <= 768;
   const initialScale = isMobile ? 0.7 : 1.8;
   const minScale = 0.4;
@@ -233,9 +258,16 @@
     const scrollY = window.scrollY;
     const scale = Math.max(initialScale - scrollY / 600, minScale);
     joyce.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+    // On scroll, unmute and play music video
+    const musicVideo = document.getElementById("musicVideo");
+    if (musicVideo.muted) {
+      musicVideo.muted = false;
+      musicVideo.play().catch(() => {});
+    }
   });
 
-  // Slideshow logic
+  // Media Carousel
   const mediaItems = document.querySelectorAll("#mediaContainer img, #mediaContainer video");
   let current = 0;
 
@@ -280,15 +312,6 @@
       current = (current - 1 + mediaItems.length) % mediaItems.length;
       updateMedia(current);
     }
-  });
-
-  // Unmute after autoplay workaround
-  window.addEventListener("load", () => {
-    const musicVideo = document.getElementById("musicVideo");
-    musicVideo.muted = false;
-    musicVideo.play().catch(e => {
-      console.warn("Autoplay with sound is blocked by browser.");
-    });
   });
 </script>
 
