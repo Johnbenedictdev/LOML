@@ -270,7 +270,7 @@
 
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
-    const scale = Math.max(1.8 - scrollY / 600, 0.4);
+    const scale = Math.max(0.7 - scrollY / 600, 0.4);
     joyce.style.transform = `translate(-50%, -50%) scale(${scale})`;
 
     if (scrollY > 300 && !orbiting) {
