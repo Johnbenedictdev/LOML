@@ -242,6 +242,7 @@
   const joyce = document.getElementById('joyce');
   const flowers = [];
 
+  // Create flowers and position them randomly
   for (let i = 0; i < 40; i++) {
     const flower = document.createElement('div');
     flower.classList.add('flower');
@@ -251,6 +252,7 @@
     flowers.push(flower);
   }
 
+  // Function to assign orbiting animation
   const createOrbitAnimation = (flower, i) => {
     const angle = (360 / flowers.length) * i;
     const orbitRadius = 80;
@@ -266,28 +268,21 @@
     flower.style.position = 'absolute';
   };
 
-  let orbiting = false;
+  // Start orbit animations immediately
+  flowers.forEach((flower, i) => createOrbitAnimation(flower, i));
+
+  // Joyce scaling logic (for scroll effect)
+  const isMobile = window.innerWidth <= 768;
+  const initialScale = isMobile ? 0.7 : 1.8;
+  const minScale = 0.4;
 
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
-    const scale = Math.max(0.7 - scrollY / 600, 0.4);
+    const scale = Math.max(initialScale - scrollY / 600, minScale);
     joyce.style.transform = `translate(-50%, -50%) scale(${scale})`;
-
-    if (scrollY > 300 && !orbiting) {
-      joyce.style.top = '110px';
-      joyce.style.left = '90px';
-      flowers.forEach((flower, i) => createOrbitAnimation(flower, i));
-      orbiting = true;
-    } else if (scrollY <= 300 && orbiting) {
-      joyce.style.top = '50%';
-      joyce.style.left = '10%';
-      flowers.forEach(flower => {
-        flower.style.animation = 'float 6s ease-in-out infinite';
-      });
-      orbiting = false;
-    }
   });
 
+  // Image/video carousel logic
   const mediaItems = document.querySelectorAll("#mediaContainer img, #mediaContainer video");
   let current = 0;
 
@@ -303,6 +298,7 @@
     }
   }
 </script>
+
 
 </body>
 </html>
