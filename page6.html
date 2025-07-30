@@ -37,62 +37,41 @@
 
     .card {
       background-color: var(--white);
-      margin: 40px auto;
+      margin: 20px auto;
       border-radius: 16px;
       max-width: 500px;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      overflow: hidden;
+      overflow: visible;
       padding-bottom: 20px;
       text-align: center;
       position: relative;
     }
 
-    .media-container {
-      position: relative;
+    .music-video {
       width: 100%;
-      aspect-ratio: 1 / 1;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+
+    .media-container {
+      width: 100%;
       background-color: #000;
+      position: relative;
     }
 
     .media-container img,
     .media-container video {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
-      position: absolute;
-      top: 0;
-      left: 0;
+      height: auto;
       display: none;
     }
 
     .media-container img.active,
     .media-container video.active {
       display: block;
-    }
-
-    .arrow-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 2em;
-      background-color: rgba(255,255,255,0.7);
-      border: none;
-      cursor: pointer;
-      z-index: 2;
-      padding: 5px 15px;
-      border-radius: 50%;
-    }
-
-    .arrow-btn:hover {
-      background-color: rgba(255,255,255,0.9);
-    }
-
-    .arrow-left {
-      left: 10px;
-    }
-
-    .arrow-right {
-      right: 10px;
     }
 
     .card-text {
@@ -167,6 +146,10 @@
     }
 
     @media (max-width: 768px) {
+      .joyce-wrapper {
+        transform: translate(-50%, -50%) scale(0.7);
+      }
+
       .joyce-wrapper img {
         max-width: 250px;
       }
@@ -187,9 +170,10 @@
 </div>
 
 <div class="card">
+  <!-- Music Video -->
+  <video id="musicVideo" class="music-video" src="images/page6music.mp4" autoplay loop muted playsinline></video>
+
   <div class="media-container" id="mediaContainer">
-    <button class="arrow-btn arrow-left" onclick="changeMedia(-1)">❮</button>
-    <button class="arrow-btn arrow-right" onclick="changeMedia(1)">❯</button>
 
  <img src="images/july6.3.jpeg" class="active" alt="Memory ">
 <img src="images/june7.1.jpeg" alt="Memory ">
@@ -199,13 +183,8 @@
 <img src="images/april16.11.jpeg" alt="Memory ">
 <img src="images/feb27.1.jpeg" alt="Memory ">
 <img src="images/feb27.2.jpeg" alt="Memory ">
-
 <img src="images/feb26.1.jpeg" alt="Memory ">
 <img src="images/july6.4.jpeg" alt="Memory ">
-
-
-
-
 
   </div>
 
@@ -215,6 +194,7 @@
 </div>
 
 <div class="letters-grid">
+  <!-- letter icons... -->
   <a href="page1.html"><img src="images/readletter.png" alt="Letter 1"></a>
   <a href="page2.html"><img src="images/readletter.png" alt="Letter 2"></a>
   <a href="page3.html"><img src="images/readletter.png" alt="Letter 3"></a>
@@ -251,57 +231,97 @@
     flowers.push(flower);
   }
 
-  const createOrbitAnimation = (flower, i) => {
+  flowers.forEach((flower, i) => {
     const angle = (360 / flowers.length) * i;
     const orbitRadius = 80;
-    const keyframes = `
-      @keyframes orbit-${i} {
-        0% { transform: rotate(${angle}deg) translateX(${orbitRadius}px) rotate(-${angle}deg); }
-        100% { transform: rotate(${angle + 360}deg) translateX(${orbitRadius}px) rotate(-${angle + 360}deg); }
-      }`;
     const style = document.createElement('style');
-    style.innerHTML = keyframes;
+    style.innerHTML = `@keyframes orbit-${i} {
+      0% { transform: rotate(${angle}deg) translateX(${orbitRadius}px) rotate(-${angle}deg); }
+      100% { transform: rotate(${angle + 360}deg) translateX(${orbitRadius}px) rotate(-${angle + 360}deg); }
+    }`;
     document.head.appendChild(style);
     flower.style.animation = `orbit-${i} 6s linear infinite`;
-    flower.style.position = 'absolute';
-  };
+  });
 
-  let orbiting = false;
+  // Joyce scale on scroll
+  const isMobile = window.innerWidth <= 768;
+  const initialScale = isMobile ? 0.7 : 1.8;
+  const minScale = 0.4;
 
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
-    const scale = Math.max(1.8 - scrollY / 600, 0.4);
+    const scale = Math.max(initialScale - scrollY / 600, minScale);
     joyce.style.transform = `translate(-50%, -50%) scale(${scale})`;
-
-    if (scrollY > 300 && !orbiting) {
-      joyce.style.top = '110px';
-      joyce.style.left = '90px';
-      flowers.forEach((flower, i) => createOrbitAnimation(flower, i));
-      orbiting = true;
-    } else if (scrollY <= 300 && orbiting) {
-      joyce.style.top = '50%';
-      joyce.style.left = '10%';
-      flowers.forEach(flower => {
-        flower.style.animation = 'float 6s ease-in-out infinite';
-      });
-      orbiting = false;
-    }
   });
 
+  // Autoplay Music On Any Interaction
+  const musicVideo = document.getElementById("musicVideo");
+  let triggered = false;
+
+  function enableMusicPlayback() {
+    if (!triggered) {
+      triggered = true;
+      musicVideo.muted = false;
+      musicVideo.play().catch(() => {});
+      // Remove all triggers
+      document.removeEventListener('scroll', enableMusicPlayback);
+      document.removeEventListener('wheel', enableMusicPlayback);
+      document.removeEventListener('mousemove', enableMusicPlayback);
+      document.removeEventListener('touchstart', enableMusicPlayback);
+    }
+  }
+
+  document.addEventListener('scroll', enableMusicPlayback, { passive: true });
+  document.addEventListener('wheel', enableMusicPlayback, { passive: true });
+  document.addEventListener('mousemove', enableMusicPlayback, { passive: true });
+  document.addEventListener('touchstart', enableMusicPlayback, { passive: true });
+
+  // Media Carousel
   const mediaItems = document.querySelectorAll("#mediaContainer img, #mediaContainer video");
   let current = 0;
 
-  function changeMedia(direction) {
-    mediaItems[current].classList.remove("active");
-    if (mediaItems[current].tagName === "VIDEO") mediaItems[current].pause();
+  const indicator = document.createElement("div");
+  indicator.style.position = "absolute";
+  indicator.style.bottom = "10px";
+  indicator.style.left = "50%";
+  indicator.style.transform = "translateX(-50%)";
+  indicator.style.background = "rgba(0,0,0,0.6)";
+  indicator.style.color = "white";
+  indicator.style.padding = "4px 10px";
+  indicator.style.borderRadius = "10px";
+  indicator.style.fontSize = "0.9em";
+  indicator.style.zIndex = "2";
+  document.getElementById("mediaContainer").appendChild(indicator);
 
-    current = (current + direction + mediaItems.length) % mediaItems.length;
-
-    mediaItems[current].classList.add("active");
-    if (mediaItems[current].tagName === "VIDEO") {
-      mediaItems[current].play();
-    }
+  function updateMedia(index) {
+    mediaItems.forEach((item, i) => {
+      item.classList.remove("active");
+      if (item.tagName === "VIDEO") item.pause();
+    });
+    mediaItems[index].classList.add("active");
+    if (mediaItems[index].tagName === "VIDEO") mediaItems[index].play();
+    indicator.textContent = `${index + 1} / ${mediaItems.length}`;
   }
+
+  updateMedia(current);
+
+  let startX = 0;
+  let endX = 0;
+
+  document.getElementById("mediaContainer").addEventListener("touchstart", e => {
+    startX = e.changedTouches[0].screenX;
+  });
+
+  document.getElementById("mediaContainer").addEventListener("touchend", e => {
+    endX = e.changedTouches[0].screenX;
+    if (endX < startX - 30) {
+      current = (current + 1) % mediaItems.length;
+      updateMedia(current);
+    } else if (endX > startX + 30) {
+      current = (current - 1 + mediaItems.length) % mediaItems.length;
+      updateMedia(current);
+    }
+  });
 </script>
 
 </body>
