@@ -192,8 +192,7 @@
 
 <div class="card">
   <div class="media-container" id="mediaContainer">
-    <button class="arrow-btn arrow-left" onclick="changeMedia(-1)">❮</button>
-    <button class="arrow-btn arrow-right" onclick="changeMedia(1)">❯</button>
+
 
     <img src="images/april11.5.jpeg" class="active" alt="Memory 1">
     <img src="images/feb6.5.jpeg" alt="Memory 2">
@@ -242,7 +241,6 @@
   const joyce = document.getElementById('joyce');
   const flowers = [];
 
-  // Create flowers and position them randomly
   for (let i = 0; i < 40; i++) {
     const flower = document.createElement('div');
     flower.classList.add('flower');
@@ -252,7 +250,6 @@
     flowers.push(flower);
   }
 
-  // Function to assign orbiting animation
   const createOrbitAnimation = (flower, i) => {
     const angle = (360 / flowers.length) * i;
     const orbitRadius = 80;
@@ -268,10 +265,8 @@
     flower.style.position = 'absolute';
   };
 
-  // Start orbit animations immediately
   flowers.forEach((flower, i) => createOrbitAnimation(flower, i));
 
-  // Joyce scaling logic (for scroll effect)
   const isMobile = window.innerWidth <= 768;
   const initialScale = isMobile ? 0.7 : 1.8;
   const minScale = 0.4;
@@ -282,32 +277,62 @@
     joyce.style.transform = `translate(-50%, -50%) scale(${scale})`;
   });
 
-  // Image/video carousel logic
   const mediaItems = document.querySelectorAll("#mediaContainer img, #mediaContainer video");
   let current = 0;
 
-  function changeMedia(direction) {
-    mediaItems[current].classList.remove("active");
-    if (mediaItems[current].tagName === "VIDEO") mediaItems[current].pause();
+  const indicator = document.createElement("div");
+  indicator.style.position = "absolute";
+  indicator.style.bottom = "10px";
+  indicator.style.left = "50%";
+  indicator.style.transform = "translateX(-50%)";
+  indicator.style.background = "rgba(0,0,0,0.6)";
+  indicator.style.color = "white";
+  indicator.style.padding = "4px 10px";
+  indicator.style.borderRadius = "10px";
+  indicator.style.fontSize = "0.9em";
+  indicator.style.zIndex = "2";
+  document.getElementById("mediaContainer").appendChild(indicator);
 
-    current = (current + direction + mediaItems.length) % mediaItems.length;
-
-    mediaItems[current].classList.add("active");
-    if (mediaItems[current].tagName === "VIDEO") {
-      mediaItems[current].play();
-    }
+  function updateMedia(index) {
+    mediaItems.forEach((item, i) => {
+      item.classList.remove("active");
+      if (item.tagName === "VIDEO") item.pause();
+    });
+    mediaItems[index].classList.add("active");
+    if (mediaItems[index].tagName === "VIDEO") mediaItems[index].play();
+    indicator.textContent = `${index + 1} / ${mediaItems.length}`;
   }
-  window.addEventListener('DOMContentLoaded', () => {
-  mediaItems.forEach((item) => {
-    if (item.tagName === "VIDEO") {
-      item.setAttribute("playsinline", "");
-      item.play().catch(() => {
-        // Autoplay might fail silently on some browsers
-      });
+
+  updateMedia(current);
+
+  let startX = 0;
+  let endX = 0;
+
+  document.getElementById("mediaContainer").addEventListener("touchstart", e => {
+    startX = e.changedTouches[0].screenX;
+  });
+
+  document.getElementById("mediaContainer").addEventListener("touchend", e => {
+    endX = e.changedTouches[0].screenX;
+    if (endX < startX - 30) {
+      current = (current + 1) % mediaItems.length;
+      updateMedia(current);
+    } else if (endX > startX + 30) {
+      current = (current - 1 + mediaItems.length) % mediaItems.length;
+      updateMedia(current);
     }
   });
-});
+
+  window.addEventListener("DOMContentLoaded", () => {
+    mediaItems.forEach((item) => {
+      if (item.tagName === "VIDEO") {
+        item.setAttribute("playsinline", "");
+        item.play().catch(() => {});
+      }
+    });
+  });
 </script>
+
 
 
 </body>
