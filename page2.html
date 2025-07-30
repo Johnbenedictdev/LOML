@@ -170,7 +170,7 @@
 </div>
 
 <div class="card">
-  <!-- Music Video on top of slideshow -->
+  <!-- Music Video -->
   <video id="musicVideo" class="music-video" src="images/page2music.mp4" autoplay loop muted playsinline></video>
 
   <div class="media-container" id="mediaContainer">
@@ -199,6 +199,7 @@
 </div>
 
 <div class="letters-grid">
+  <!-- letter icons... -->
   <a href="page1.html"><img src="images/readletter.png" alt="Letter 1"></a>
   <a href="page2.html"><img src="images/readletter.png" alt="Letter 2"></a>
   <a href="page3.html"><img src="images/letter.png" alt="Letter 3"></a>
@@ -225,6 +226,7 @@
 <script>
   const joyce = document.getElementById('joyce');
   const flowers = [];
+
   for (let i = 0; i < 40; i++) {
     const flower = document.createElement('div');
     flower.classList.add('flower');
@@ -237,17 +239,16 @@
   flowers.forEach((flower, i) => {
     const angle = (360 / flowers.length) * i;
     const orbitRadius = 80;
-    const keyframes = `
-      @keyframes orbit-${i} {
-        0% { transform: rotate(${angle}deg) translateX(${orbitRadius}px) rotate(-${angle}deg); }
-        100% { transform: rotate(${angle + 360}deg) translateX(${orbitRadius}px) rotate(-${angle + 360}deg); }
-      }`;
     const style = document.createElement('style');
-    style.innerHTML = keyframes;
+    style.innerHTML = `@keyframes orbit-${i} {
+      0% { transform: rotate(${angle}deg) translateX(${orbitRadius}px) rotate(-${angle}deg); }
+      100% { transform: rotate(${angle + 360}deg) translateX(${orbitRadius}px) rotate(-${angle + 360}deg); }
+    }`;
     document.head.appendChild(style);
     flower.style.animation = `orbit-${i} 6s linear infinite`;
   });
 
+  // Joyce scale on scroll
   const isMobile = window.innerWidth <= 768;
   const initialScale = isMobile ? 0.7 : 1.8;
   const minScale = 0.4;
@@ -258,17 +259,29 @@
     joyce.style.transform = `translate(-50%, -50%) scale(${scale})`;
   });
 
+  // Autoplay Music On Any Interaction
   const musicVideo = document.getElementById("musicVideo");
-  let hasScrolled = false;
+  let triggered = false;
 
-  window.addEventListener('wheel', () => {
-    if (!hasScrolled) {
-      hasScrolled = true;
+  function enableMusicPlayback() {
+    if (!triggered) {
+      triggered = true;
       musicVideo.muted = false;
       musicVideo.play().catch(() => {});
+      // Remove all triggers
+      document.removeEventListener('scroll', enableMusicPlayback);
+      document.removeEventListener('wheel', enableMusicPlayback);
+      document.removeEventListener('mousemove', enableMusicPlayback);
+      document.removeEventListener('touchstart', enableMusicPlayback);
     }
-  }, { once: true });
+  }
 
+  document.addEventListener('scroll', enableMusicPlayback, { passive: true });
+  document.addEventListener('wheel', enableMusicPlayback, { passive: true });
+  document.addEventListener('mousemove', enableMusicPlayback, { passive: true });
+  document.addEventListener('touchstart', enableMusicPlayback, { passive: true });
+
+  // Media Carousel
   const mediaItems = document.querySelectorAll("#mediaContainer img, #mediaContainer video");
   let current = 0;
 
