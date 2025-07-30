@@ -60,15 +60,12 @@
       width: 100%;
       background-color: #000;
       position: relative;
-      min-height: 300px;
     }
 
     .media-container img,
     .media-container video {
       width: 100%;
       height: auto;
-      max-height: 500px;
-      object-fit: contain;
       display: none;
     }
 
@@ -148,57 +145,6 @@
       100% { transform: translate(-20px, 20px); }
     }
 
-    .sound-control {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      font-size: 20px;
-      cursor: pointer;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-    }
-
-    .sound-control:hover {
-      background: rgba(0,0,0,0.9);
-      transform: scale(1.1);
-    }
-
-    .music-info {
-      position: absolute;
-      bottom: 10px;
-      left: 0;
-      right: 0;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      padding: 5px 10px;
-      font-size: 0.9em;
-      z-index: 2;
-    }
-
-    .progress-bar {
-      height: 3px;
-      background: rgba(255,255,255,0.3);
-      width: 100%;
-      margin-top: 5px;
-      position: relative;
-    }
-
-    .progress {
-      height: 100%;
-      background: var(--pink);
-      width: 0%;
-      transition: width 0.1s linear;
-    }
-
     @media (max-width: 768px) {
       .joyce-wrapper {
         transform: translate(-50%, -50%) scale(0.7);
@@ -212,10 +158,6 @@
         width: 30px;
         height: 30px;
       }
-      
-      .media-container {
-        min-height: 200px;
-      }
     }
   </style>
 </head>
@@ -228,17 +170,8 @@
 </div>
 
 <div class="card">
-  <!-- Music Video with playback controls -->
-  <div class="media-container">
-    <video id="musicVideo" class="music-video active" src="images/page2music.mp4" autoplay loop playsinline></video>
-    <div class="music-info">
-      <div>Now Playing: Our Song</div>
-      <div class="progress-bar">
-        <div class="progress" id="musicProgress"></div>
-      </div>
-    </div>
-    <button id="soundToggle" class="sound-control">🔇</button>
-  </div>
+  <!-- Music Video -->
+  <video id="musicVideo" class="music-video" src="images/page2music.mp4" autoplay loop muted playsinline></video>
 
   <div class="media-container" id="mediaContainer">
     <img src="images/april11.5.jpeg" class="active" alt="Memory 1">
@@ -247,7 +180,7 @@
     <img src="images/feb9.3.jpeg" alt="Memory 4">
     <img src="images/feb9.16.jpeg" alt="Memory 5">
     <img src="images/feb9.19.jpeg" alt="Memory 6">
-    <video src="images/feb14.12.mp4" loop playsinline></video>
+    <video src="images/feb14.12.mp4" autoplay muted loop playsinline></video>
     <img src="images/march22.4.jpeg" alt="Memory 8">
     <img src="images/march23.5.jpeg" alt="Memory 9">
     <img src="images/feb6.2.jpeg" alt="Memory 10">
@@ -255,7 +188,7 @@
 
   <div class="card-text">
     <p>
-      I will never understand why you didn't have much friends because I don't know anyone from our friend group that has a negative opinion on you.
+      I will never understand why you didn’t have much friends because I don’t know anyone from our friend group that has a negative opinion on you.
       You are extremely loved and that is because you are very loving and you have a great heart. You have amassed a great number of friends and supporters.
       You have not only created a friend group, you have created a family that will always fight for you and will always put your best interest in heart.
       We all love you very much and when you were gone for a bit, we were all distraught by your absence.
@@ -266,6 +199,7 @@
 </div>
 
 <div class="letters-grid">
+  <!-- letter icons... -->
   <a href="page1.html"><img src="images/readletter.png" alt="Letter 1"></a>
   <a href="page2.html"><img src="images/readletter.png" alt="Letter 2"></a>
   <a href="page3.html"><img src="images/letter.png" alt="Letter 3"></a>
@@ -290,55 +224,9 @@
 <footer>Made with love for Hayaty ✨💕</footer>
 
 <script>
-  // Music video playback with sound control
-  const musicVideo = document.getElementById("musicVideo");
-  const soundToggle = document.getElementById("soundToggle");
-  const musicProgress = document.getElementById("musicProgress");
-  
-  // Initialize video with muted autoplay (required by browsers)
-  musicVideo.muted = true;
-  musicVideo.autoplay = true;
-  
-  // Try to play the video immediately (muted autoplay is allowed)
-  musicVideo.play().catch(error => {
-    console.log('Autoplay prevented:', error);
-  });
-  
-  // Sound toggle functionality
-  soundToggle.addEventListener('click', () => {
-    musicVideo.muted = !musicVideo.muted;
-    soundToggle.textContent = musicVideo.muted ? '🔇' : '🔊';
-    
-    // If unmuting, try to play in case it was blocked
-    if (!musicVideo.muted) {
-      musicVideo.play().catch(e => console.log('Playback failed:', e));
-    }
-  });
-  
-  // Update progress bar
-  musicVideo.addEventListener('timeupdate', () => {
-    const progress = (musicVideo.currentTime / musicVideo.duration) * 100;
-    musicProgress.style.width = `${progress}%`;
-  });
-  
-  // Enable sound on any user interaction
-  function enableSound() {
-    if (musicVideo.muted) {
-      musicVideo.muted = false;
-      soundToggle.textContent = '🔊';
-      musicVideo.play().catch(e => console.log('Playback failed:', e));
-    }
-  }
-  
-  // Set up interaction listeners
-  document.addEventListener('click', enableSound);
-  document.addEventListener('touchstart', enableSound);
-  document.addEventListener('keydown', enableSound);
-  
-  // Joyce floating element with flowers
   const joyce = document.getElementById('joyce');
   const flowers = [];
-  
+
   for (let i = 0; i < 40; i++) {
     const flower = document.createElement('div');
     flower.classList.add('flower');
@@ -347,7 +235,7 @@
     joyce.appendChild(flower);
     flowers.push(flower);
   }
-  
+
   flowers.forEach((flower, i) => {
     const angle = (360 / flowers.length) * i;
     const orbitRadius = 80;
@@ -359,22 +247,44 @@
     document.head.appendChild(style);
     flower.style.animation = `orbit-${i} 6s linear infinite`;
   });
-  
+
   // Joyce scale on scroll
   const isMobile = window.innerWidth <= 768;
   const initialScale = isMobile ? 0.7 : 1.8;
   const minScale = 0.4;
-  
+
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
     const scale = Math.max(initialScale - scrollY / 600, minScale);
     joyce.style.transform = `translate(-50%, -50%) scale(${scale})`;
   });
-  
+
+  // Autoplay Music On Any Interaction
+  const musicVideo = document.getElementById("musicVideo");
+  let triggered = false;
+
+  function enableMusicPlayback() {
+    if (!triggered) {
+      triggered = true;
+      musicVideo.muted = false;
+      musicVideo.play().catch(() => {});
+      // Remove all triggers
+      document.removeEventListener('scroll', enableMusicPlayback);
+      document.removeEventListener('wheel', enableMusicPlayback);
+      document.removeEventListener('mousemove', enableMusicPlayback);
+      document.removeEventListener('touchstart', enableMusicPlayback);
+    }
+  }
+
+  document.addEventListener('scroll', enableMusicPlayback, { passive: true });
+  document.addEventListener('wheel', enableMusicPlayback, { passive: true });
+  document.addEventListener('mousemove', enableMusicPlayback, { passive: true });
+  document.addEventListener('touchstart', enableMusicPlayback, { passive: true });
+
   // Media Carousel
   const mediaItems = document.querySelectorAll("#mediaContainer img, #mediaContainer video");
   let current = 0;
-  
+
   const indicator = document.createElement("div");
   indicator.style.position = "absolute";
   indicator.style.bottom = "10px";
@@ -387,38 +297,26 @@
   indicator.style.fontSize = "0.9em";
   indicator.style.zIndex = "2";
   document.getElementById("mediaContainer").appendChild(indicator);
-  
+
   function updateMedia(index) {
     mediaItems.forEach((item, i) => {
       item.classList.remove("active");
-      if (item.tagName === "VIDEO") {
-        item.pause();
-        item.currentTime = 0;
-      }
+      if (item.tagName === "VIDEO") item.pause();
     });
     mediaItems[index].classList.add("active");
-    if (mediaItems[index].tagName === "VIDEO") {
-      mediaItems[index].play().catch(e => console.log('Carousel video play failed:', e));
-    }
+    if (mediaItems[index].tagName === "VIDEO") mediaItems[index].play();
     indicator.textContent = `${index + 1} / ${mediaItems.length}`;
   }
-  
+
   updateMedia(current);
-  
-  // Auto-rotate carousel every 5 seconds
-  setInterval(() => {
-    current = (current + 1) % mediaItems.length;
-    updateMedia(current);
-  }, 5000);
-  
-  // Touch controls for carousel
+
   let startX = 0;
   let endX = 0;
-  
+
   document.getElementById("mediaContainer").addEventListener("touchstart", e => {
     startX = e.changedTouches[0].screenX;
   });
-  
+
   document.getElementById("mediaContainer").addEventListener("touchend", e => {
     endX = e.changedTouches[0].screenX;
     if (endX < startX - 30) {
