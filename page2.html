@@ -201,7 +201,7 @@
     <img src="images/feb9.3.jpeg" alt="Memory 4">
     <img src="images/feb9.16.jpeg" alt="Memory 5">
     <img src="images/feb9.19.jpeg" alt="Memory 6">
-    <video src="images/feb14.12.mp4" autoplay muted loop></video>
+    <video src="images/feb14.12.mp4" autoplay muted loop playsinline></video>
     <img src="images/march22.4.jpeg" alt="Memory 8">
     <img src="images/march23.5.jpeg" alt="Memory 9">
     <img src="images/feb6.2.jpeg" alt="Memory 10">
@@ -297,6 +297,16 @@
       mediaItems[current].play();
     }
   }
+  window.addEventListener('DOMContentLoaded', () => {
+  mediaItems.forEach((item) => {
+    if (item.tagName === "VIDEO") {
+      item.setAttribute("playsinline", "");
+      item.play().catch(() => {
+        // Autoplay might fail silently on some browsers
+      });
+    }
+  });
+});
 </script>
 
 
