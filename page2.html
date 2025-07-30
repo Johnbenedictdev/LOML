@@ -135,10 +135,11 @@
 
     .joyce-wrapper {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      transform: scale(0.4);
+      top: 50%;
+      left: 10%;
+      transform: translate(-50%, -50%) scale(1.8);
       z-index: 10;
+      transition: transform 0.4s ease, top 0.4s ease, left 0.4s ease;
       pointer-events: none;
     }
 
@@ -166,6 +167,10 @@
     }
 
     @media (max-width: 768px) {
+      .joyce-wrapper {
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+
       .joyce-wrapper img {
         max-width: 250px;
       }
@@ -204,13 +209,31 @@
 
   <div class="card-text">
     <p>
-      I will never understand why you didn’t have much friends because I don’t know anyone from our friend group that has a negative opinion on you. You are extremely loved and that is because you are very loving and you have a great heart. You have amassed a great number of friends and supporters. You have not only created a friend group, you have created a family that will always fight for you and will always put your best interest in heart. We all love you very much and when you were gone for a bit, we were all distraught by your absence.  It is no secret that my family loves you so much, you are now a part of my family we you are always welcome in our home. The time we spent in ikea and in my home shows the love my family has for you. We are your family till the end of time. 
+      I will never understand why you didn’t have much friends because I don’t know anyone from our friend group that has a negative opinion on you. You are extremely loved and that is because you are very loving and you have a great heart. You have amassed a great number of friends and supporters. You have not only created a friend group, you have created a family that will always fight for you and will always put your best interest in heart. We all love you very much and when you were gone for a bit, we were all distraught by your absence. It is no secret that my family loves you so much, you are now a part of my family, and you are always welcome in our home. The time we spent in IKEA and in my home shows the love my family has for you. We are your family till the end of time.
     </p>
   </div>
 </div>
 
 <div class="letters-grid">
-  <!-- All 19 letter links here (same as before) -->
+  <a href="page1.html"><img src="images/readletter.png" alt="Letter 1"></a>
+  <a href="page2.html"><img src="images/readletter.png" alt="Letter 2"></a>
+  <a href="page3.html"><img src="images/letter.png" alt="Letter 3"></a>
+  <a href="page4.html"><img src="images/letter.png" alt="Letter 4"></a>
+  <a href="page5.html"><img src="images/letter.png" alt="Letter 5"></a>
+  <a href="page6.html"><img src="images/letter.png" alt="Letter 6"></a>
+  <a href="page7.html"><img src="images/letter.png" alt="Letter 7"></a>
+  <a href="page8.html"><img src="images/letter.png" alt="Letter 8"></a>
+  <a href="page9.html"><img src="images/letter.png" alt="Letter 9"></a>
+  <a href="page10.html"><img src="images/letter.png" alt="Letter 10"></a>
+  <a href="page11.html"><img src="images/letter.png" alt="Letter 11"></a>
+  <a href="page12.html"><img src="images/letter.png" alt="Letter 12"></a>
+  <a href="page13.html"><img src="images/letter.png" alt="Letter 13"></a>
+  <a href="page14.html"><img src="images/letter.png" alt="Letter 14"></a>
+  <a href="page15.html"><img src="images/letter.png" alt="Letter 15"></a>
+  <a href="page16.html"><img src="images/letter.png" alt="Letter 16"></a>
+  <a href="page17.html"><img src="images/letter.png" alt="Letter 17"></a>
+  <a href="page18.html"><img src="images/letter.png" alt="Letter 18"></a>
+  <a href="page19.html"><img src="images/letter.png" alt="Letter 19"></a>
 </div>
 
 <footer>Made with love for Hayaty ✨💕</footer>
@@ -222,11 +245,48 @@
   for (let i = 0; i < 40; i++) {
     const flower = document.createElement('div');
     flower.classList.add('flower');
-    flower.style.top = `${Math.random() * 100}%`;
-    flower.style.left = `${Math.random() * 100}%`;
+    flower.style.top = `${Math.random() * 160 - 30}%`;
+    flower.style.left = `${Math.random() * 160 - 30}%`;
     joyce.appendChild(flower);
     flowers.push(flower);
   }
+
+  const createOrbitAnimation = (flower, i) => {
+    const angle = (360 / flowers.length) * i;
+    const orbitRadius = 80;
+    const keyframes = `
+      @keyframes orbit-${i} {
+        0% { transform: rotate(${angle}deg) translateX(${orbitRadius}px) rotate(-${angle}deg); }
+        100% { transform: rotate(${angle + 360}deg) translateX(${orbitRadius}px) rotate(-${angle + 360}deg); }
+      }`;
+    const style = document.createElement('style');
+    style.innerHTML = keyframes;
+    document.head.appendChild(style);
+    flower.style.animation = `orbit-${i} 6s linear infinite`;
+    flower.style.position = 'absolute';
+  };
+
+  let orbiting = false;
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const scale = Math.max(1.8 - scrollY / 600, 0.4);
+    joyce.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+    if (scrollY > 300 && !orbiting) {
+      joyce.style.top = '110px';
+      joyce.style.left = '90px';
+      flowers.forEach((flower, i) => createOrbitAnimation(flower, i));
+      orbiting = true;
+    } else if (scrollY <= 300 && orbiting) {
+      joyce.style.top = '50%';
+      joyce.style.left = '10%';
+      flowers.forEach(flower => {
+        flower.style.animation = 'float 6s ease-in-out infinite';
+      });
+      orbiting = false;
+    }
+  });
 
   const mediaItems = document.querySelectorAll("#mediaContainer img, #mediaContainer video");
   let current = 0;
