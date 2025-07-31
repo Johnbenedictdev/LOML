@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Letter 13 ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #FFB6C1;
+      --green: #ccffcc;
+      --accent: #4a4a4a;
+      --white: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background-color: var(--green);
+      color: var(--accent);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 20px;
+      background-color: var(--pink);
+      font-family: 'Pacifico', cursive;
+      font-size: 2em;
+      border-bottom: 5px solid var(--white);
+      color: var(--accent);
+    }
+
+    .card {
+      background-color: var(--white);
+      margin: 20px auto;
+      border-radius: 16px;
+      max-width: 500px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      overflow: visible;
+      padding-bottom: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .music-video {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+
+    .media-container {
+      width: 100%;
+      background-color: #000;
+      position: relative;
+    }
+
+    .media-container img,
+    .media-container video {
+      width: 100%;
+      height: auto;
+      display: none;
+    }
+
+    .media-container img.active,
+    .media-container video.active {
+      display: block;
+    }
+
+    .card-text {
+      padding: 30px;
+      font-size: 1.1em;
+      line-height: 1.7;
+      color: var(--accent);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: var(--pink);
+      color: var(--accent);
+      font-size: 0.9em;
+      margin-top: auto;
+    }
+
+    .letters-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 80px 40px;
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: 0 auto 60px;
+    }
+
+    .letters-grid a img {
+      width: 100%;
+      max-width: 100px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      transition: transform 0.3s;
+    }
+
+    .letters-grid a img:hover {
+      transform: scale(1.1);
+    }
+
+    .joyce-wrapper {
+      position: fixed;
+      top: 50%;
+      left: 10%;
+      transform: translate(-50%, -50%) scale(1.8);
+      z-index: 10;
+      transition: transform 0.4s ease, top 0.4s ease, left 0.4s ease;
+      pointer-events: none;
+    }
+
+    .joyce-wrapper img {
+      max-width: 450px;
+      height: auto;
+    }
+
+    .flower {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background-image: url('images/pngflowers.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 2;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0px, 0px); }
+      50% { transform: translate(20px, -30px); }
+      100% { transform: translate(-20px, 20px); }
+    }
+
+    @media (max-width: 768px) {
+      .joyce-wrapper {
+        transform: translate(-50%, -50%) scale(0.7);
+      }
+
+      .joyce-wrapper img {
+        max-width: 250px;
+      }
+
+      .flower {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>Letter 13</header>
+
+<div class="joyce-wrapper" id="joyce">
+  <img src="images/kimo.png" alt="Kareem Floating" />
+</div>
+
+<div class="card">
+  <!-- Music Video -->
+  <video id="musicVideo" class="music-video" src="images/page13music.mp4" autoplay loop muted playsinline></video>
+  <div class="media-container" id="mediaContainer">
+
+
+
+
+ <img src="images/april8.7.jpeg"  class="active" alt="Memory "controls autoplay loop playsinline></video>
+<img src="images/feb6.4.jpeg" alt="Memory "> 
+<img src="images/feb6.8.jpeg" alt="Memory "> 
+<img src="images/march22.2.jpeg" alt="Memory "> 
+<img src="images/april22.5.jpeg" alt="Memory "> 
+<video src="images/april16.4.mp4" controls autoplay loop playsinline></video>
+<img src="images/april16.2.jpeg" alt="Memory "> 
+<img src="images/april16.6.jpeg" alt="Memory ">
+<img src="images/april16.11.jpeg" alt="Memory ">
+<video src="images/april16.12.mp4" controls autoplay loop playsinline></video>
+
+
+
+
+  </div>
+
+  <div class="card-text">
+    <p>you give so much peace to everyone around you. being near you makes people feel calm and comfortable. you allow others to be themselves without judgment or pressure. my family really likes your vibes, they feel the joy and calm you bring. even joyce noticed your peaceful energy the very first day we met you. it’s a rare and beautiful quality, and it makes being around you something special. </p>
+  </div>
+</div>
+
+<div class="letters-grid">
+  <!-- letter icons... -->
+  <a href="page1.html"><img src="images/readletter.png" alt="Letter 1"></a>
+  <a href="page2.html"><img src="images/readletter.png" alt="Letter 2"></a>
+  <a href="page3.html"><img src="images/readletter.png" alt="Letter 3"></a>
+  <a href="page4.html"><img src="images/readletter.png" alt="Letter 4"></a>
+  <a href="page5.html"><img src="images/readletter.png" alt="Letter 5"></a>
+  <a href="page6.html"><img src="images/readletter.png" alt="Letter 6"></a>
+  <a href="page7.html"><img src="images/readletter.png" alt="Letter 7"></a>
+  <a href="page8.html"><img src="images/readletter.png" alt="Letter 8"></a>
+  <a href="page9.html"><img src="images/readletter.png" alt="Letter 9"></a>
+  <a href="page10.html"><img src="images/readletter.png" alt="Letter 10"></a>
+  <a href="page11.html"><img src="images/readletter.png" alt="Letter 11"></a>
+  <a href="page12.html"><img src="images/readletter.png" alt="Letter 12"></a>
+  <a href="page13.html"><img src="images/readletter.png" alt="Letter 13"></a>
+  <a href="page14.html"><img src="images/letter.png" alt="Letter 14"></a>
+  <a href="page15.html"><img src="images/letter.png" alt="Letter 15"></a>
+  <a href="page16.html"><img src="images/letter.png" alt="Letter 16"></a>
+  <a href="page17.html"><img src="images/letter.png" alt="Letter 17"></a>
+  <a href="page18.html"><img src="images/letter.png" alt="Letter 18"></a>
+  <a href="page19.html"><img src="images/letter.png" alt="Letter 19"></a>
+</div>
+
+<footer>Made with love for Hayaty ✨💕</footer>
+
+<script>
+  const joyce = document.getElementById('joyce');
+  const flowers = [];
+
+  for (let i = 0; i < 40; i++) {
+    const flower = document.createElement('div');
+    flower.classList.add('flower');
+    flower.style.top = `${Math.random() * 160 - 30}%`;
+    flower.style.left = `${Math.random() * 160 - 30}%`;
+    joyce.appendChild(flower);
+    flowers.push(flower);
+  }
+
+  flowers.forEach((flower, i) => {
+    const angle = (360 / flowers.length) * i;
+    const orbitRadius = 80;
+    const style = document.createElement('style');
+    style.innerHTML = `@keyframes orbit-${i} {
+      0% { transform: rotate(${angle}deg) translateX(${orbitRadius}px) rotate(-${angle}deg); }
+      100% { transform: rotate(${angle + 360}deg) translateX(${orbitRadius}px) rotate(-${angle + 360}deg); }
+    }`;
+    document.head.appendChild(style);
+    flower.style.animation = `orbit-${i} 6s linear infinite`;
+  });
+
+  // Joyce scale on scroll
+  const isMobile = window.innerWidth <= 768;
+  const initialScale = isMobile ? 0.7 : 1.8;
+  const minScale = 0.4;
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const scale = Math.max(initialScale - scrollY / 600, minScale);
+    joyce.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  });
+
+  // Autoplay Music On Any Interaction
+  const musicVideo = document.getElementById("musicVideo");
+  let triggered = false;
+
+  function enableMusicPlayback() {
+    if (!triggered) {
+      triggered = true;
+      musicVideo.muted = false;
+      musicVideo.play().catch(() => {});
+      // Remove all triggers
+      document.removeEventListener('scroll', enableMusicPlayback);
+      document.removeEventListener('wheel', enableMusicPlayback);
+      document.removeEventListener('mousemove', enableMusicPlayback);
+      document.removeEventListener('touchstart', enableMusicPlayback);
+    }
+  }
+
+  document.addEventListener('scroll', enableMusicPlayback, { passive: true });
+  document.addEventListener('wheel', enableMusicPlayback, { passive: true });
+  document.addEventListener('mousemove', enableMusicPlayback, { passive: true });
+  document.addEventListener('touchstart', enableMusicPlayback, { passive: true });
+
+  // Media Carousel
+  const mediaItems = document.querySelectorAll("#mediaContainer img, #mediaContainer video");
+  let current = 0;
+
+  const indicator = document.createElement("div");
+  indicator.style.position = "absolute";
+  indicator.style.bottom = "10px";
+  indicator.style.left = "50%";
+  indicator.style.transform = "translateX(-50%)";
+  indicator.style.background = "rgba(0,0,0,0.6)";
+  indicator.style.color = "white";
+  indicator.style.padding = "4px 10px";
+  indicator.style.borderRadius = "10px";
+  indicator.style.fontSize = "0.9em";
+  indicator.style.zIndex = "2";
+  document.getElementById("mediaContainer").appendChild(indicator);
+
+  function updateMedia(index) {
+    mediaItems.forEach((item, i) => {
+      item.classList.remove("active");
+      if (item.tagName === "VIDEO") item.pause();
+    });
+    mediaItems[index].classList.add("active");
+    if (mediaItems[index].tagName === "VIDEO") mediaItems[index].play();
+    indicator.textContent = `${index + 1} / ${mediaItems.length}`;
+  }
+
+  updateMedia(current);
+
+  let startX = 0;
+  let endX = 0;
+
+  document.getElementById("mediaContainer").addEventListener("touchstart", e => {
+    startX = e.changedTouches[0].screenX;
+  });
+
+  document.getElementById("mediaContainer").addEventListener("touchend", e => {
+    endX = e.changedTouches[0].screenX;
+    if (endX < startX - 30) {
+      current = (current + 1) % mediaItems.length;
+      updateMedia(current);
+    } else if (endX > startX + 30) {
+      current = (current - 1 + mediaItems.length) % mediaItems.length;
+      updateMedia(current);
+    }
+  });
+</script>
+
+</body>
+</html>
